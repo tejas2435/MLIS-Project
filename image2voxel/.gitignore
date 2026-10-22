@@ -1,0 +1,28 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Large dataset files
+data/
+*.tgz
+*.tar.gz
+*.tar
+
+# Ignore models over GitHub's 100MB file limit
+best_model.pth
+latest_model.pth
+*.zip
+
+# Keep the GitHub-ready lightweight checkpoint (50 MB)
+!best_model_fp16.pth
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Editor / System
+.vscode/
+.idea/
+*.log

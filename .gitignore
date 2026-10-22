@@ -1,0 +1,29 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Large dataset files (Stanford ShapeNet 12GB+ data)
+data/
+*.tgz
+*.tar.gz
+*.tar
+
+# Ignore models over GitHub's 100MB file limit
+best_model.pth
+latest_model.pth
+*.zip
+
+# Keep the GitHub-ready lightweight checkpoint (50 MB, under GitHub limit)
+!best_model_fp16.pth
+!image2voxel/best_model_fp16.pth
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Editor / System
+.vscode/
+.idea/
+*.log
