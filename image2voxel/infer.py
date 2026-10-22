@@ -12,11 +12,14 @@ matplotlib.use("Agg")  # Non-interactive, lightweight headless backend
 import matplotlib.pyplot as plt
 from model import ImageToVoxel
 
-def predict(image_path, model_path="best_model.pth", threshold=0.5, output_obj="output.obj", visualize=False, save_voxel_plot=True):
+def predict(image_path, model_path="best_model.pth", threshold=0.5, output_obj="output.obj", visualize=False, save_voxel_plot=True, force_cpu=False):
     """
     Run 3D voxel reconstruction from a single 2D image and export an OBJ 3D mesh.
     """
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    if force_cpu or not torch.cuda.is_available():
+        device = torch.device("cpu")
+    else:
+        device = torch.device("cuda")
     print(f"Using device: {device}")
 
     # Check image path
@@ -190,6 +193,7 @@ if __name__ == "__main__":
     parser.add_argument("--threshold", type=float, default=0.5, help="Occupancy probability threshold (default: 0.5)")
     parser.add_argument("--output", type=str, default="output.obj", help="Path to output .obj mesh")
     parser.add_argument("--gui", action="store_true", help="Open interactive Open3D window")
+    parser.add_argument("--cpu", action="store_true", help="Force CPU inference even if GPU is available")
 
     args = parser.parse_args()
     predict(
@@ -197,5 +201,6 @@ if __name__ == "__main__":
         model_path=args.model,
         threshold=args.threshold,
         output_obj=args.output,
-        visualize=args.gui
+        visualize=args.gui,
+        force_cpu=args.cpu
     )
